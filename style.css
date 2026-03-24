@@ -52,10 +52,22 @@ footer a:hover {
   text-decoration: underline;
 }
 
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
 .gallery img {
   width: 100%;
-  max-width: 100%;
-  height: auto;
+  height: 250px;
+  object-fit: cover;
   display: block;
   border-radius: 12px;
+}
+
+@media (min-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
