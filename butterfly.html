@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Flower Gallery</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery-bundle.min.css">
+
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  padding: 20px;
+  background: #f4f9f4;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+/* Back */
+.top-bar {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.back-btn {
+  background: #2e8b57;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+/* Controls */
+.controls {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.controls input,
+.controls select {
+  padding: 8px;
+  border-radius: 6px;
+  margin: 5px;
+}
+
+/* Filters */
+.filters {
+  text-align: center;
+}
+
+.filters button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  background: #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.filters button.active {
+  background: #2e8b57;
+  color: white;
+}
+
+/* Grid */
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 600px) {
+  .gallery { grid-template-columns: repeat(2,1fr); }
+}
+
+@media (min-width: 1000px) {
+  .gallery { grid-template-columns: repeat(3,1fr); }
+}
+
+/* Card */
+.item {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.item img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.info {
+  padding: 10px;
+}
+
+/* Favorite button */
+.fav-btn {
+  padding: 6px 10px;
+  border: none;
+  background: #eee;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* LightGallery caption */
+.lg-sub-html {
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="top-bar">
+  <a href="index.html" class="back-btn">⬅ Back to Home</a>
+</div>
+
+<h1>🌸 My Butterflys Gallery</h1>
+
+<div class="controls">
+  <input type="text" id="searchBox" placeholder="Search butterflys...">
+  <select id="sortSelect">
+    <option value="latest">Latest</option>
+    <option value="oldest">Oldest</option>
+  </select>
+</div>
+
+<div class="filters" id="filters"></div>
+
+<div id="lightgallery" class="gallery"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js"></script>
+
+<script>
+const butterflys = [
+  {
+    src: "butterflys/Atlas moth.jpg",
+    name: "Atlas moth",
+    location: "Virajpet",
+    date: "7-10-2026",
+    category: "Moth"
+  },
+  {
+    src: "butterflys/Atlas moth.jpg",
+    name: "Sunbutterfly",
+    location: "Garden",
+    date: "2026-03-18",
+    category: "sunbutterfly"
+  }
+];
+
+const gallery = document.getElementById("lightgallery");
+const filtersDiv = document.getElementById("filters");
+const searchBox = document.getElementById("searchBox");
+
+let currentFilter = "all";
+let sortOrder = "latest";
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+/* 🏷 Create filters with count */
+function createFilters() {
+  const categories = ["all", "favorites", ...new Set(butterflys.map(f => f.category))];
+
+  filtersDiv.innerHTML = "";
+
+  categories.forEach(cat => {
+    const btn = document.createElement("button");
+
+    if (cat === "favorites") {
+      btn.innerText = `❤️ Favorites (${favorites.length})`;
+    } else {
+      btn.innerText = cat.charAt(0).toUpperCase() + cat.slice(1);
+    }
+
+    btn.onclick = () => {
+      currentFilter = cat;
+      renderGallery();
+      setActive(btn);
+    };
+
+    if (cat === "all") btn.classList.add("active");
+
+    filtersDiv.appendChild(btn);
+  });
+}
+
+/* Active button */
+function setActive(btn) {
+  document.querySelectorAll(".filters button")
+    .forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+/* Render gallery */
+function renderGallery() {
+  gallery.innerHTML = "";
+
+  const search = searchBox.value.toLowerCase();
+
+  const sorted = [...butterflys].sort((a,b)=>{
+    return sortOrder==="latest"
+      ? new Date(b.date)-new Date(a.date)
+      : new Date(a.date)-new Date(b.date);
+  });
+
+  sorted.forEach(f => {
+
+    const isFav = favorites.includes(f.src);
+
+    /* ❤️ Favorites filter */
+    if (currentFilter === "favorites" && !isFav) return;
+
+    /* Category filter */
+    if (currentFilter !== "all" && currentFilter !== "favorites" && f.category !== currentFilter) return;
+
+    /* Search filter */
+    if(!f.name.toLowerCase().includes(search) &&
+       !f.location.toLowerCase().includes(search)) return;
+
+    const item = document.createElement("div");
+    item.className = "item";
+
+    item.innerHTML = `
+      <a href="${f.src}" class="img-link"
+        data-sub-html="<h4>🌸 ${f.name}</h4><p>${f.location}</p><p>${f.date}</p>">
+        <img src="${f.src}">
+      </a>
+
+      <div class="info">
+        <strong>${f.name}</strong><br>
+        ${f.location}<br>
+        ${f.date}<br><br>
+
+        <button class="fav-btn" data-src="${f.src}">
+          ${isFav ? "❤️ Saved" : "🤍 Favorite"}
+        </button>
+      </div>
+    `;
+
+    gallery.appendChild(item);
+  });
+
+  lightGallery(gallery, {
+    selector: ".img-link",
+    subHtmlSelectorRelative: true
+  });
+
+  /* 🔄 update filter count */
+  createFilters();
+}
+
+/* ❤️ Favorite toggle */
+document.addEventListener("click", function(e){
+  if(!e.target.classList.contains("fav-btn")) return;
+
+  const src = e.target.dataset.src;
+
+  if(favorites.includes(src)){
+    favorites = favorites.filter(f=>f!==src);
+  } else {
+    favorites.push(src);
+  }
+
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+
+  renderGallery();
+});
+
+/* Search */
+searchBox.addEventListener("input", renderGallery);
+
+/* Sort */
+document.getElementById("sortSelect").addEventListener("change", function(){
+  sortOrder = this.value;
+  renderGallery();
+});
+
+/* Init */
+createFilters();
+renderGallery();
+</script>
+
+</body>
+</html>
