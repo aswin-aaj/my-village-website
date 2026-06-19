@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aswin — My Village</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-831D7X0XFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-831D7X0XFR');
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5F1E8;
+      --green: #1A6B45;
+      --green-light: #E8F5EE;
+      --dark: #1a1a1a;
+      --mid: #444;
+      --muted: #777;
+      --border: #e0ddd5;
+      --yellow: #F5C842;
+      --code-bg: #1C2333;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--dark);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--mid);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--green); }
+
+    /* ── HERO ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      padding: 4rem 3rem 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .hero-left h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.07;
+      margin-bottom: 1.6rem;
+      color: var(--dark);
+    }
+
+    .hero-left h1 .accent {
+      color: var(--green);
+      font-style: italic;
+      text-decoration: underline;
+      text-decoration-color: var(--yellow);
+      text-underline-offset: 5px;
+      text-decoration-thickness: 4px;
+    }
+
+    .hero-left p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--mid);
+      margin-bottom: 2.2rem;
+    }
+
+    .hero-left p a {
+      color: var(--green);
+      font-weight: 500;
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--green);
+    }
+
+    .hero-left p strong { font-weight: 600; color: var(--dark); }
+
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 0.85rem 1.7rem;
+      border-radius: 100px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: #155737; transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--dark);
+      border: 1.5px solid #bbb;
+      padding: 0.85rem 1.7rem;
+      border-radius: 100px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .btn-secondary:hover { border-color: var(--dark); transform: translateY(-1px); }
+
+    /* Code card */
+    .hero-right { display: flex; flex-direction: column; gap: 0.9rem; }
+
+    .code-card {
+      background: var(--code-bg);
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .code-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.8rem 1.1rem;
+      border-bottom: 1px solid #2d3549;
+    }
+
+    .dot { width: 11px; height: 11px; border-radius: 50%; }
+    .dot-r { background: #FF5F57; }
+    .dot-y { background: #FFBD2E; }
+    .dot-g { background: #28CA41; }
+
+    .code-titlebar .filename {
+      font-size: 0.78rem;
+      color: #9ba5c0;
+      font-family: 'Courier New', monospace;
+      margin-left: 10px;
+    }
+
+    .profile-bubble {
+      position: absolute;
+      top: 0.55rem;
+      right: 0.85rem;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 3px solid var(--code-bg);
+      overflow: hidden;
+      background: #3a4560;
+    }
+
+    .profile-bubble img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-initials {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #9ba5c0;
+    }
+
+    .code-body {
+      padding: 1.2rem 1.3rem 1.6rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.9;
+    }
+
+    .c-comment { color: #636d8b; }
+    .c-tag { color: #7fb3e8; }
+    .c-text { color: #cdd5ef; }
+
+    .hl {
+      display: block;
+      background: rgba(245, 200, 66, 0.12);
+      border-left: 3px solid var(--yellow);
+      margin: 0 -1.3rem;
+      padding: 0 1rem 0 calc(1.3rem - 3px);
+    }
+
+    .arrow-label {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #999;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+
+    .live-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--border);
+    }
+
+    .live-badge {
+      display: inline-block;
+      background: var(--green-light);
+      color: var(--green);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 5px;
+      margin-bottom: 0.55rem;
+    }
+
+    .live-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .live-card p { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── SECTIONS ── */
+    .content-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+
+    .section-title em { font-style: italic; color: var(--green); }
+
+    .prose p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--mid);
+      margin-bottom: 1.2rem;
+      max-width: 680px;
+    }
+
+    .prose p:last-child { margin-bottom: 0; }
+
+    /* Two-col layout for about me */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: 16px;
+      background: #d0cfc8;
+      display: block;
+    }
+
+    .hobbies-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .hobby-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1.3rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+
+    .hobby-icon { font-size: 1.6rem; line-height: 1; flex-shrink: 0; }
+
+    .hobby-item h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+      color: var(--dark);
+    }
+
+    .hobby-item p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+    /* Photo gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .gallery img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 12px;
+      background: #d8d5cc;
+      display: block;
+      transition: transform 0.3s;
+    }
+
+    .gallery img:hover { transform: scale(1.02); }
+
+    /* School section */
+    .school-wrap {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .school-img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      border-radius: 16px;
+      background: #d0cfc8;
+      display: block;
+    }
+
+    /* Projects */
+    .project-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.3rem 1.7rem;
+      text-decoration: none;
+      color: var(--dark);
+      margin-top: 1.5rem;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .project-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.07); }
+
+    .project-icon { font-size: 2rem; }
+
+    .project-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .project-card p { font-size: 0.82rem; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p { font-size: 0.88rem; color: var(--muted); }
+
+    footer a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--dark);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.45rem 1rem;
+      transition: border-color 0.2s;
+    }
+
+    footer a:hover { border-color: #999; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 800px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 2.5rem 1.2rem 3rem;
+        gap: 2.5rem;
+      }
+
+      .content-section { padding: 3.5rem 1.2rem; }
+
+      .two-col,
+      .school-wrap { grid-template-columns: 1fr; gap: 2rem; }
+
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+
+      .hobbies-list { grid-template-columns: 1fr; }
+
+      footer { padding: 2rem 1.2rem; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-brand">
+    🌿 Aswin
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">My Story</a></li>
+    <li><a href="#village">My Village</a></li>
+    <li><a href="#school">My School</a></li>
+    <li><a href="#hobbies">Hobbies</a></li>
+    <li><a href="#projects">Projects</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-left">
+    <h1>
+      I'm Aswin, and I built my<br>
+      <span class="accent">first website</span><br>
+      over vacation.
+    </h1>
+    <p>
+      I'm a school student from a small village in Kannur, Kerala.
+      During my <a href="#about">school annual vacation</a>, instead of only cycling and
+      fishing, I got curious about how websites are made — so I started learning
+      <strong>HTML</strong>, line by line, and built a website about the place I love most.
+    </p>
+    <div class="btn-group">
+      <a href="#village" class="btn-primary">See what I made →</a>
+      <a href="#about" class="btn-secondary">Read my story</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="code-card">
+      <div class="code-titlebar">
+        <span class="dot dot-r"></span>
+        <span class="dot dot-y"></span>
+        <span class="dot dot-g"></span>
+        <span class="filename">index.html</span>
+      </div>
+      <div class="profile-bubble">
+        <img src="images/aswin.jpg" alt="Aswin" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="profile-initials" style="display:none;">A</div>
+      </div>
+      <div class="code-body">
+        <span class="c-comment">&lt;!-- my very first lines --&gt;</span><br>
+        <span><span class="c-tag">&lt;h1&gt;</span><span class="c-text">Welcome to My Village</span><span class="c-tag">&lt;/h1&gt;</span></span><br>
+        <span class="hl"><span class="c-tag">&lt;p&gt;</span><span class="c-text">A small website about</span><br>
+        &nbsp;&nbsp;<span class="c-text">my village and my life.</span><span class="c-tag">&lt;/p&gt;</span></span>
+      </div>
+    </div>
+
+    <div class="arrow-label">↓ AND IT BECAME ↓</div>
+
+    <div class="live-card">
+      <span class="live-badge">Live Website</span>
+      <h3>Welcome to My Village</h3>
+      <p>A small website about my village, school, and hobbies.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── ABOUT ME ── -->
+<section class="content-section" id="about">
+  <div class="two-col">
+    <div>
+      <span class="section-label">My Story</span>
+      <h2 class="section-title">A curious kid from<br><em>Kerala's green hills.</em></h2>
+      <div class="prose">
+        <p>My name is Aswin. I have passed to 4th standard. I live in a small, peaceful village in Kannur, Kerala, surrounded by rubber trees, coconut palms, and winding roads.</p>
+        <p>I like playing keyboard, chess, cycling, fishing, cooking, and learning Karate. I enjoy learning new things — and this website is one of the newest things I've learned.</p>
+        <p>I enjoy learning new things and building this website about my village and my life. Every section here is something I care about and wanted to share with the world.</p>
+      </div>
+    </div>
+    <div>
+      <img src="images/aswin.jpg" alt="Aswin" class="about-photo"
+           onerror="this.style.background='#c8d5c8'; this.alt='Photo coming soon';">
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── MY VILLAGE ── -->
+<section class="content-section" id="village">
+  <span class="section-label">Where I'm From</span>
+  <h2 class="section-title">My <em>village</em> — peaceful,<br>green, and full of life.</h2>
+  <div class="prose">
+    <p>My village is a peaceful and beautiful place surrounded by many trees, coconut palms, and green hills. The roads in my village are quiet and clean, and people here live a simple and happy life.</p>
+    <p>In the mornings, you can hear birds singing and see farmers working in the fields. Many people grow fruits like jackfruit, coconut, and banana. The fresh air and natural beauty make my village a wonderful place to live.</p>
+    <p>Rubber plantations are also very common in my village. Many farmers grow rubber trees and collect rubber latex early in the morning. Rubber farming is an important part of the village economy and daily life.</p>
+    <p>I enjoy cycling on the small roads, fishing in nearby rivers, and spending time outdoors with my friends. My village is calm, friendly, and full of nature.</p>
+  </div>
+
+  <div class="gallery">
+    <img src="images/my-village1.jpeg" alt="Cow house in the village">
+    <img src="images/my-village2.jpeg" alt="Coconut trees">
+    <img src="images/my-village3.jpeg" alt="Village road">
+    <img src="images/my-village4.jpeg" alt="Kavala junction">
+    <img src="images/my-village5.jpeg" alt="Nearby river">
+    <img src="images/my village6.jpeg" alt="Rubber tree plantation">
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── MY SCHOOL ── -->
+<section class="content-section" id="school">
+  <div class="school-wrap">
+    <div>
+      <img src="images/school image.jpeg" alt="GHSS Kaniyanchal — My School" class="school-img"
+           onerror="this.style.background='#c8d0cc';">
+    </div>
+    <div>
+      <span class="section-label">My School</span>
+      <h2 class="section-title">GHSS<br><em>Kaniyanchal.</em></h2>
+      <div class="prose">
+        <p>My school name is GHSS Kaniyanchal. It is a government school in a rural area of Kannur district, Kerala. The school started in 1956 and teaches students from primary classes to higher secondary (+2).</p>
+        <p>My school has good facilities like classrooms, drinking water, toilets, a playground, and computers. Many students study here and learn many things.</p>
+        <p>I like my school very much because teachers are kind and I enjoy learning with my friends.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── HOBBIES ── -->
+<section class="content-section" id="hobbies">
+  <span class="section-label">What I Love</span>
+  <h2 class="section-title">My <em>hobbies</em> —<br>many and growing.</h2>
+
+  <div class="hobbies-list">
+    <div class="hobby-item">
+      <span class="hobby-icon">🎹</span>
+      <div>
+        <h4>Playing Keyboard</h4>
+        <p>I enjoy playing keyboard and learning new songs whenever I get the chance.</p>
+      </div>
+    </div>
+    <div class="hobby-item">
+      <span class="hobby-icon">♟️</span>
+      <div>
+        <h4>Chess</h4>
+        <p>I like playing chess and solving puzzles — it teaches me to think ahead.</p>
+      </div>
+    </div>
+    <div class="hobby-item">
+      <span class="hobby-icon">🚴</span>
+      <div>
+        <h4>Cycling</h4>
+        <p>I love cycling around my village on the small quiet roads every day.</p>
+      </div>
+    </div>
+    <div class="hobby-item">
+      <span class="hobby-icon">🥋</span>
+      <div>
+        <h4>Kempo Karate</h4>
+        <p>I am learning Kempo Karate, which teaches discipline and strength of mind.</p>
+      </div>
+    </div>
+    <div class="hobby-item">
+      <span class="hobby-icon">🎣</span>
+      <div>
+        <h4>Fishing</h4>
+        <p>I enjoy fishing in rivers and ponds near my village — it's very calming.</p>
+      </div>
+    </div>
+    <div class="hobby-item">
+      <span class="hobby-icon">🍳</span>
+      <div>
+        <h4>Cooking</h4>
+        <p>I like helping in the kitchen and learning simple recipes step by step.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery" style="margin-top: 3rem;">
+    <img src="images/hobbi image1.jpeg" alt="Fishing">
+    <img src="images/hobbi image5.jpeg" alt="Swimming">
+    <img src="images/hobbi image3.jpeg" alt="Swimming at the river">
+    <img src="images/hobbi image4.jpeg" alt="Playing chess">
+    <img src="images/hobbi image cycling.jpeg" alt="Cycling">
+    <img src="images/hobbi image6.jpeg" alt="Fishing at the pond">
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── PROJECTS ── -->
+<section class="content-section" id="projects">
+  <span class="section-label">My Projects</span>
+  <h2 class="section-title">Things I've <em>built</em><br>and made.</h2>
+  <div class="prose">
+    <p>Besides this website, I've also put together some small projects I'm proud of. Here's one you can explore right now:</p>
+  </div>
+  <a href="butterfly.html" class="project-card">
+    <span class="project-icon">🦋</span>
+    <div>
+      <h4>My Butterfly Gallery</h4>
+      <p>A collection of butterfly photos I've spotted near my village.</p>
+    </div>
+  </a>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>Made with curiosity by Aswin · Kannur, Kerala 🌿</p>
+  <a href="https://www.youtube.com/@aswin-aaj" target="_blank" rel="noopener noreferrer">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="red" aria-hidden="true">
+      <path d="M23.5 6.2s-.2-1.7-.8-2.5c-.8-1-1.7-1-2.1-1.1C17.9 2.3 12 2.3 12 2.3h0s-5.9 0-8.6.3c-.4.1-1.3.1-2.1 1.1-.6.8-.8 2.5-.8 2.5S0 8.1 0 10v1.9c0 1.9.5 3.8.5 3.8s.2 1.7.8 2.5c.8 1 1.9 1 2.4 1.1 1.8.2 7.6.3 7.6.3s5.9 0 8.6-.3c.4-.1 1.3-.1 2.1-1.1.6-.8.8-2.5.8-2.5s.5-1.9.5-3.8V10c0-1.9-.5-3.8-.5-3.8zM9.7 14.6V7.8l6.5 3.4-6.5 3.4z"/>
+    </svg>
+    Subscribe on YouTube
+  </a>
+</footer>
+
+</body>
+</html>
